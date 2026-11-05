@@ -1,0 +1,6 @@
+{
+  "name": "GRAIL JOBS — Premium Global Job Listing & Recruitment Platform",
+  "description": "Awwwards-inspired editorial job discovery platform for top creative, engineering, and product talent worldwide with dedicated job seeker dashboard and administrator portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

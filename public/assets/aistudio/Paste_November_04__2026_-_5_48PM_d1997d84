@@ -1,0 +1,1408 @@
+# MASTER DEVELOPMENT PROMPT
+
+## Build a Premium Global Job Listing & Recruitment Platform
+
+Act as a senior product designer, UI/UX architect, senior React engineer, full-stack developer, database architect and application security engineer.
+
+Your task is to design and develop a complete, production-ready global job listing platform inspired by the visual quality, creative direction, typography, spacing and interactions of Awwwards-winning websites.
+
+This is a real application, not a static landing page, wireframe, or visual prototype.
+
+The platform must include a complete public-facing job marketplace and a separate, secure administrator portal.
+
+---
+
+# 1. PROJECT OVERVIEW
+
+Project name: Configurable / not yet decided.
+
+Project type: Global Job Listing & Recruitment Platform.
+
+Primary purpose:
+Help job seekers discover relevant employment opportunities, explore companies, create professional profiles, submit job applications and track application progress.
+
+Platform structure:
+
+1. Public website.
+2. Job seeker dashboard.
+3. Protected admin portal.
+
+IMPORTANT BUSINESS RULE:
+
+Only authorized administrators can create, edit, publish, unpublish and delete job listings.
+
+Regular users must NOT have job publishing privileges.
+
+There is no employer self-service job publishing portal in this version.
+
+Administrators are responsible for managing every job listing and company profile.
+
+Target audience: Global.
+
+Support international locations, remote opportunities, multiple currencies, different employment types and international date formats.
+
+---
+
+# 2. TECHNOLOGY STACK
+
+Use the following stack:
+
+Frontend:
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Motion for React
+- Lucide React icons
+
+Backend:
+
+- Supabase
+- PostgreSQL
+- Supabase Authentication
+- Supabase Storage
+- Supabase Row Level Security
+
+Additional libraries:
+
+- React Hook Form
+- Zod
+- TanStack Query
+- Recharts for analytics
+- date-fns
+- React Hot Toast or Sonner
+
+Architecture:
+
+- Component-based architecture.
+- Reusable UI components.
+- Feature-based folder organization.
+- Centralized API/service layer.
+- Type-safe database interactions.
+- Environment-based configuration.
+
+Do not put database queries directly inside every UI component.
+
+Separate presentation, business logic, data fetching and validation.
+
+---
+
+# 3. DESIGN DIRECTION – AWWWARDS INSPIRED
+
+The visual quality of the website is a major priority.
+
+Use Awwwards as a design reference, not as a template to copy.
+
+Create an original design with the following characteristics:
+
+Design style:
+
+- Premium editorial website.
+- Minimalist and sophisticated.
+- Modern typography.
+- Strong visual hierarchy.
+- Generous whitespace.
+- Asymmetrical editorial compositions where appropriate.
+- Carefully aligned grid systems.
+- Minimal borders.
+- High-quality micro-interactions.
+- Clean and distinctive layouts.
+
+
+
+Typography:
+
+- Inter Tight or Geist.
+- Large bold display headings.
+- Clear hierarchy between headings and body.
+- Tight typography spacing.
+- Readable body text.
+
+UI DESIGN RULES:
+
+1. Avoid generic Bootstrap-style layouts.
+2. Avoid excessive rounded cards.
+3. Avoid unnecessary gradients.
+4. Avoid excessive shadows.
+5. Avoid oversized colorful icons.
+6. Avoid generic AI-generated SaaS aesthetics.
+7. Avoid unnecessary decorative elements.
+8. Use consistent spacing.
+9. Maintain a strong grid.
+10. Use smooth, restrained animations.
+
+INTERACTION DESIGN:
+
+- Subtle page transitions.
+- Smooth navigation.
+- Hover transitions on job cards.
+- Animated search interactions.
+- Button micro-interactions.
+- Scroll-based reveal animations.
+- Skeleton loading states.
+- Refined dropdown menus.
+- Toast notifications.
+- Smooth modal transitions.
+
+Animations must not compromise accessibility or performance.
+
+Respect prefers-reduced-motion.
+
+RESPONSIVE DESIGN:
+
+Support:
+
+- Desktop.
+- Laptop.
+- Tablet.
+- Mobile.
+
+Build responsive navigation and optimized layouts for every screen size.
+
+---
+
+# 4. PUBLIC WEBSITE
+
+Create the following pages.
+
+## 4.1 Homepage
+
+Build a premium editorial-style homepage.
+
+Navigation:
+
+- Brand logo.
+- Find Jobs.
+- Companies.
+- Career Resources.
+- About.
+- Contact.
+- Login.
+- Sign Up.
+
+Hero section:
+
+Large headline:
+
+"Find work that moves you forward."
+
+Supporting text:
+
+"Discover opportunities from companies building the future. Find the right role, explore new possibilities and take your next career step."
+
+Include:
+
+- Job title / keyword search.
+- Location search.
+- Remote / location preference.
+- Search button.
+- Featured job count or platform statistics.
+
+Homepage sections:
+
+1. Hero.
+2. Trusted companies.
+3. Featured job opportunities.
+4. Browse by category.
+5. Latest job listings.
+6. Explore remote opportunities.
+7. Featured companies.
+8. Why use the platform.
+9. Career opportunities CTA.
+10. Newsletter subscription.
+11. Footer.
+
+Use realistic placeholder content only for development. Clearly distinguish demo content from live records.
+
+All dynamic content must be loaded from Supabase.
+
+## 4.2 Find Jobs Page
+
+Route: /jobs
+
+Create a professional job discovery experience.
+
+Features:
+
+- Search by job title.
+- Search by keyword.
+- Search by company.
+- Search by location.
+- Remote jobs filter.
+- Employment type filter.
+- Experience level filter.
+- Salary range filter.
+- Category filter.
+- Industry filter.
+- Date posted filter.
+- Featured jobs filter.
+- Sort by latest.
+- Sort by relevance.
+
+Job card information:
+
+- Company logo.
+- Job title.
+- Company name.
+- Location.
+- Remote / hybrid / on-site.
+- Employment type.
+- Experience level.
+- Salary range when available.
+- Short job description.
+- Date posted.
+- Featured indicator.
+- Save job button.
+- View details action.
+
+Requirements:
+
+- Functional pagination.
+- URL-based search and filter state.
+- Search debouncing.
+- Clear filters.
+- Responsive listing layout.
+- Loading skeletons.
+- Empty search results.
+- Error states.
+
+Do not load the entire database into the browser for filtering.
+
+Use server-side filtering, sorting and pagination.
+
+## 4.3 Job Details Page
+
+Route: /jobs/
+
+Create a premium job detail page.
+
+Display:
+
+- Job title.
+- Company logo.
+- Company name.
+- Job location.
+- Work arrangement.
+- Employment type.
+- Experience level.
+- Salary information.
+- Published date.
+- Application deadline.
+- Job description.
+- Responsibilities.
+- Requirements.
+- Qualifications.
+- Required skills.
+- Benefits.
+- Company overview.
+- Similar jobs.
+
+Primary action:
+
+"Apply for this position"
+
+Secondary action:
+
+"Save Job"
+
+Application functionality:
+
+- Authenticated users can apply.
+- Guest users are redirected to login and returned to the job after authentication.
+- Prevent duplicate applications.
+- Allow resume selection or upload.
+- Support optional cover letter.
+- Collect required application information.
+- Display submission confirmation.
+- Save application records in Supabase.
+
+Never expose internal admin information or unpublished jobs.
+
+## 4.4 Companies Page
+
+Route: /companies
+
+Allow users to discover companies.
+
+Features:
+
+- Company search.
+- Industry filters.
+- Location filters.
+- Company cards.
+- Company logos.
+- Company descriptions.
+- Website links.
+- Number of active jobs.
+
+## 4.5 Company Profile
+
+Route: /companies/
+
+Display:
+
+- Company logo.
+- Company name.
+- Cover image.
+- Description.
+- Industry.
+- Headquarters.
+- Company size.
+- Website.
+- Social links.
+- Active jobs.
+
+All company profiles are managed by administrators.
+
+## 4.6 Authentication Pages
+
+Routes:
+
+- /login
+- /register
+- /forgot-password
+- /reset-password
+- /verify-email
+
+Implement:
+
+- Email and password registration.
+- Login.
+- Logout.
+- Email verification.
+- Password recovery.
+- Session persistence.
+- Form validation.
+- Authentication error handling.
+- Protected routes.
+
+Use Supabase Auth.
+
+Do not implement fake authentication.
+
+## 4.7 Job Seeker Dashboard
+
+Routes:
+
+- /dashboard
+- /dashboard/profile
+- /dashboard/applications
+- /dashboard/saved-jobs
+- /dashboard/resumes
+- /dashboard/settings
+
+Dashboard overview:
+
+- Welcome message.
+- Profile completion indicator.
+- Total applications.
+- Pending applications.
+- Shortlisted applications.
+- Saved jobs.
+- Recent application activity.
+
+Profile:
+
+- Full name.
+- Profile photo.
+- Professional headline.
+- Email.
+- Phone.
+- Current location.
+- Professional summary.
+- Skills.
+- Experience.
+- Education.
+- Portfolio URL.
+- LinkedIn URL.
+- Personal website.
+
+Resume management:
+
+- Upload PDF and DOC/DOCX files.
+- View uploaded resume metadata.
+- Delete resume.
+- Set default resume.
+- Enforce file-size and MIME-type restrictions.
+- Use private Supabase Storage.
+
+Applications:
+
+- Display all submitted applications.
+- Show company and job information.
+- Show submission date.
+- Show current status.
+- Display status history when available.
+
+Application statuses:
+
+- Submitted.
+- Under Review.
+- Shortlisted.
+- Interview.
+- Rejected.
+- Hired.
+- Withdrawn.
+
+Saved jobs:
+
+- Save and unsave jobs.
+- Display saved opportunities.
+- Remove saved jobs.
+- Navigate to job details.
+
+Settings:
+
+- Update profile.
+- Change password using Supabase Auth.
+- Manage account preferences.
+- Request account deletion through a secure workflow.
+
+---
+
+# 5. ADMIN PORTAL
+
+Route prefix: /admin
+
+The admin portal must be completely protected.
+
+Only authenticated users with the admin role can access it.
+
+Regular job seekers must never be able to access administrative pages or APIs.
+
+Admin navigation:
+
+- Dashboard.
+- Jobs.
+- Applications.
+- Users.
+- Companies.
+- Categories.
+- Skills.
+- Contact Messages.
+- Newsletter Subscribers.
+- Analytics.
+- Site Settings.
+- Admin Management.
+
+## 5.1 Admin Dashboard
+
+Display real database-driven statistics:
+
+- Total registered users.
+- Total published jobs.
+- Total draft jobs.
+- Total expired jobs.
+- Total applications.
+- Applications this month.
+- Active companies.
+- New users this month.
+
+Dashboard visualizations:
+
+- Job publishing activity.
+- Application trends.
+- User registration trends.
+- Application status distribution.
+- Popular job categories.
+
+Include:
+
+- Recent applications.
+- Recently created jobs.
+- Latest registered users.
+- Quick actions.
+
+Never use hardcoded statistics in production.
+
+## 5.2 Job Management
+
+Route: /admin/jobs
+
+Admin can:
+
+- Create job.
+- Edit job.
+- Delete job.
+- Publish job.
+- Unpublish job.
+- Save as draft.
+- Feature job.
+- Duplicate job.
+- Mark job as filled.
+- Manage expiration date.
+
+Job creation form:
+
+Basic information:
+
+- Job title.
+- Job slug.
+- Company.
+- Category.
+- Industry.
+- Job description.
+
+Employment information:
+
+- Employment type.
+- Workplace type.
+- Location.
+- Country.
+- City.
+- Experience level.
+
+Compensation:
+
+- Minimum salary.
+- Maximum salary.
+- Currency.
+- Salary period.
+- Salary visibility.
+
+Additional information:
+
+- Required skills.
+- Responsibilities.
+- Requirements.
+- Qualifications.
+- Benefits.
+- Application URL or internal application mode.
+- Application deadline.
+- Published date.
+- Featured status.
+- Job status.
+
+Job status:
+
+- Draft.
+- Published.
+- Expired.
+- Filled.
+- Archived.
+
+Validate every form.
+
+Generate unique slugs.
+
+Provide confirmation dialogs before destructive operations.
+
+## 5.3 Application Management
+
+Route: /admin/applications
+
+Display:
+
+- Applicant name.
+- Applicant email.
+- Job title.
+- Company.
+- Application date.
+- Current status.
+- Resume.
+- Cover letter.
+
+Features:
+
+- Search applications.
+- Filter by status.
+- Filter by job.
+- Filter by date.
+- View application details.
+- Securely access resumes.
+- Update application status.
+- Add internal admin notes.
+- Maintain application status history.
+- Export filtered application data as CSV.
+
+Only authorized administrators may access applicant records.
+
+## 5.4 User Management
+
+Route: /admin/users
+
+Features:
+
+- View registered users.
+- Search by name or email.
+- Filter by registration date.
+- View user profiles.
+- View application history.
+- Suspend or reactivate accounts through a secure backend workflow.
+- View account creation date.
+
+Never expose authentication secrets.
+
+## 5.5 Company Management
+
+Route: /admin/companies
+
+Features:
+
+- Create company.
+- Edit company.
+- Delete company.
+- Upload logo.
+- Upload cover image.
+- Manage company description.
+- Manage website.
+- Manage location.
+- Manage industry.
+- Manage company size.
+- Manage social links.
+- View associated jobs.
+
+## 5.6 Category and Skills Management
+
+Admin can:
+
+- Create categories.
+- Edit categories.
+- Delete categories when safe.
+- Manage category icons.
+- Create skills.
+- Edit skills.
+- Search and organize skills.
+
+Prevent deleting categories and skills that are still in use without a proper reassignment process.
+
+## 5.7 Contact Messages
+
+Admin can:
+
+- View contact messages.
+- Read message details.
+- Mark as read.
+- Mark as resolved.
+- Delete messages.
+- Search messages.
+
+## 5.8 Site Settings
+
+Allow authorized administrators to manage:
+
+- Site name.
+- Logo.
+- Favicon.
+- Homepage hero text.
+- SEO title.
+- SEO description.
+- Contact email.
+- Social media links.
+- Footer content.
+- Newsletter settings.
+
+## 5.9 Admin Management
+
+Provide a secure admin-user management workflow.
+
+Only a super administrator can:
+
+- Create another admin.
+- Change admin permissions.
+- Revoke admin access.
+
+Do not allow public registration to assign an admin role.
+
+Do not rely on frontend role checks alone.
+
+---
+
+# 6. SUPABASE DATABASE ARCHITECTURE
+
+Create a properly normalized PostgreSQL database.
+
+Use UUID primary keys.
+
+Use foreign keys and appropriate indexes.
+
+Use created_at and updated_at timestamps.
+
+Recommended tables:
+
+1. profiles
+2. companies
+3. jobs
+4. categories
+5. skills
+6. job_skills
+7. applications
+8. application_status_history
+9. saved_jobs
+10. resumes
+11. contact_messages
+12. newsletter_subscribers
+13. site_settings
+14. admin_audit_logs
+
+TABLE STRUCTURE:
+
+profiles:
+
+- id UUID PRIMARY KEY REFERENCES auth.users(id)
+- full_name
+- avatar_url
+- headline
+- phone
+- location
+- country
+- professional_summary
+- portfolio_url
+- linkedin_url
+- role
+- account_status
+- created_at
+- updated_at
+
+Important: role must default to 'user'. Only trusted backend provisioning can assign admin or super_admin roles.
+
+companies:
+
+- id UUID PRIMARY KEY
+- name
+- slug UNIQUE
+- logo_url
+- cover_url
+- description
+- website
+- industry
+- company_size
+- headquarters
+- country
+- city
+- social_links JSONB
+- created_at
+- updated_at
+
+jobs:
+
+- id UUID PRIMARY KEY
+- title
+- slug UNIQUE
+- company_id REFERENCES companies(id)
+- category_id REFERENCES categories(id)
+- description
+- responsibilities
+- requirements
+- qualifications
+- benefits
+- location
+- city
+- country
+- workplace_type
+- employment_type
+- experience_level
+- salary_min
+- salary_max
+- salary_currency
+- salary_period
+- salary_visible
+- application_mode
+- external_application_url
+- application_deadline
+- status
+- is_featured
+- published_at
+- created_by
+- created_at
+- updated_at
+
+categories:
+
+- id UUID PRIMARY KEY
+- name
+- slug UNIQUE
+- description
+- icon
+- created_at
+
+skills:
+
+- id UUID PRIMARY KEY
+- name
+- slug UNIQUE
+- created_at
+
+job_skills:
+
+- job_id REFERENCES jobs(id)
+- skill_id REFERENCES skills(id)
+- PRIMARY KEY (job_id, skill_id)
+
+applications:
+
+- id UUID PRIMARY KEY
+- job_id REFERENCES jobs(id)
+- user_id REFERENCES profiles(id)
+- resume_id
+- cover_letter
+- status
+- applied_at
+- updated_at
+
+application_status_history:
+
+- id UUID PRIMARY KEY
+- application_id REFERENCES applications(id)
+- previous_status
+- new_status
+- changed_by
+- admin_note
+- created_at
+
+saved_jobs:
+
+- id UUID PRIMARY KEY
+- user_id REFERENCES profiles(id)
+- job_id REFERENCES jobs(id)
+- created_at
+- UNIQUE(user_id, job_id)
+
+resumes:
+
+- id UUID PRIMARY KEY
+- user_id REFERENCES profiles(id)
+- file_name
+- storage_path
+- file_size
+- mime_type
+- is_default
+- created_at
+
+contact_messages:
+
+- id UUID PRIMARY KEY
+- name
+- email
+- subject
+- message
+- status
+- created_at
+
+newsletter_subscribers:
+
+- id UUID PRIMARY KEY
+- email UNIQUE
+- status
+- subscribed_at
+
+site_settings:
+
+- id UUID PRIMARY KEY
+- setting_key UNIQUE
+- setting_value JSONB
+- updated_at
+
+admin_audit_logs:
+
+- id UUID PRIMARY KEY
+- admin_id
+- action
+- resource_type
+- resource_id
+- metadata JSONB
+- created_at
+
+Adapt column types, defaults, checks and relationships as needed.
+
+Add:
+
+- Indexes for job title, slug, status, location, country, category, published_at.
+- Indexes for application user_id, job_id and status.
+- Appropriate unique constraints.
+- Foreign-key deletion behavior.
+- Validation constraints for salary ranges and other business rules.
+
+Create migrations and seed data separately.
+
+Do not reset or drop existing production data when applying schema updates.
+
+---
+
+# 7. AUTHENTICATION AND AUTHORIZATION
+
+Use Supabase Auth.
+
+Roles:
+
+- user
+- admin
+- super_admin
+
+Registration:
+
+- Public registration always creates a regular user.
+- Never trust role values submitted by a browser.
+- Users cannot modify their own role.
+- Admin provisioning must be performed through a secure backend process.
+
+Authorization:
+
+- Public users can view published jobs and public company profiles.
+- Authenticated users can manage their own profiles.
+- Users can access their own resumes.
+- Users can create and view their own applications.
+- Users can manage their own saved jobs.
+- Only administrators can create, modify or delete job listings.
+- Only authorized administrators can manage companies.
+- Only administrators can access all applications and user management.
+- Only super administrators can manage admin privileges.
+
+Implement Supabase RLS on every sensitive table.
+
+Do not rely on hiding buttons or frontend routes as security.
+
+Use database policies and trusted backend authorization.
+
+---
+
+# 8. SUPABASE STORAGE
+
+Create storage buckets:
+
+1. company-assets
+2. resumes
+3. profile-images
+
+company-assets:
+
+- Company logos.
+- Company covers.
+
+profile-images:
+
+- User profile pictures.
+
+resumes:
+
+- Private PDF and DOC/DOCX documents.
+
+Security:
+
+- Public read access only where appropriate for company branding.
+- Private access for resumes.
+- Authenticated users can upload only to their own user-specific folders.
+- Users cannot read other users' private resumes.
+- Administrators can access resumes only through authorized backend or storage policies.
+- Validate file type and size.
+- Use signed URLs for private documents.
+- Never store service-role keys in the frontend.
+
+---
+
+# 9. SEARCH AND DISCOVERY
+
+Implement a scalable job search system.
+
+Support:
+
+- Full-text job search.
+- Keyword search.
+- Location search.
+- Category filtering.
+- Employment type.
+- Experience level.
+- Workplace type.
+- Salary filtering.
+- Date filtering.
+- Featured jobs.
+
+Use PostgreSQL full-text search and appropriate indexes.
+
+Implement pagination and sorting on the server.
+
+Use URL query parameters so users can share filtered job searches.
+
+Provide sensible empty and error states.
+
+---
+
+# 10. APPLICATION WORKFLOW
+
+The complete workflow:
+
+1. User discovers a job.
+2. User opens job details.
+3. User clicks Apply.
+4. User authenticates if required.
+5. User selects or uploads a resume.
+6. User adds a cover letter if desired.
+7. User submits the application.
+8. Backend validates the request.
+9. Duplicate applications are prevented.
+10. Application is stored in Supabase.
+11. Applicant sees confirmation.
+12. Application appears in the user's dashboard.
+13. Admin sees the application in the admin portal.
+14. Admin updates the application status.
+15. Applicant can see the updated status.
+
+Use database transactions or secure backend logic where multiple related records must be created together.
+
+---
+
+# 11. PERFORMANCE AND SEO
+
+Implement:
+
+- Lazy-loaded images.
+- Optimized image delivery.
+- Code splitting.
+- Route-based loading.
+- Query caching.
+- Debounced search.
+- Pagination.
+- Efficient database queries.
+- Semantic HTML.
+- Accessible forms.
+- Keyboard navigation.
+- Correct heading hierarchy.
+- Meta titles and descriptions.
+- Open Graph metadata.
+- Canonical URLs.
+- Sitemap.
+- robots.txt.
+
+For job detail pages, implement appropriate JobPosting structured data only for published, eligible listings, with accurate fields and expiry handling.
+
+---
+
+# 12. PROJECT STRUCTURE
+
+Use a maintainable folder structure similar to:
+
+src/
+assets/
+components/
+ui/
+layout/
+jobs/
+companies/
+dashboard/
+admin/
+pages/
+public/
+auth/
+dashboard/
+admin/
+features/
+authentication/
+jobs/
+applications/
+profiles/
+companies/
+saved-jobs/
+administration/
+hooks/
+services/
+lib/
+supabase.ts
+validations/
+types/
+utils/
+routes/
+styles/
+
+supabase/
+migrations/
+seed.sql
+
+Keep components small and reusable.
+
+Avoid giant components and duplicated business logic.
+
+Use TypeScript types generated from the Supabase database schema wherever possible.
+
+---
+
+# 13. FUNCTIONAL REQUIREMENTS
+
+This is a real full-stack application.
+
+Do not create buttons that do nothing.
+
+Every visible interactive element must have an implemented action or be clearly marked as a disabled feature.
+
+Implement:
+
+- Real authentication.
+- Real database queries.
+- Real CRUD operations.
+- Real job search.
+- Real filtering.
+- Real pagination.
+- Real resume uploads.
+- Real applications.
+- Real saved jobs.
+- Real admin management.
+- Real analytics queries.
+- Real contact form submissions.
+- Real form validation.
+- Real error handling.
+- Real loading states.
+- Real success notifications.
+
+Do not use fake API responses in production code.
+
+Do not hardcode dashboard statistics.
+
+Use mock data only in an isolated development seed file.
+
+---
+
+# 14. ERROR HANDLING AND EDGE CASES
+
+Handle:
+
+- Expired sessions.
+- Unauthorized access.
+- Missing records.
+- Duplicate applications.
+- Invalid resume files.
+- Oversized uploads.
+- Expired jobs.
+- Deleted companies.
+- Empty search results.
+- Network failures.
+- Supabase errors.
+- Invalid forms.
+- Unauthorized admin actions.
+- Concurrent application status updates.
+
+Provide clear messages and recovery actions.
+
+---
+
+# 15. ADMIN DESIGN SYSTEM
+
+The admin portal should have a distinct but consistent visual identity.
+
+Design:
+
+- Clean sidebar navigation.
+- Compact top navigation.
+- Responsive sidebar.
+- Breadcrumbs.
+- Search.
+- Notification area.
+- Admin profile menu.
+- Data tables.
+- Filters.
+- Pagination.
+- Charts.
+- Modals.
+- Confirmation dialogs.
+- Toast notifications.
+
+Use a dark sidebar with a clean light workspace, or a refined monochrome layout.
+
+Avoid overloading the dashboard with cards.
+
+Prioritize information hierarchy and usability.
+
+---
+
+# 16. TESTING
+
+Implement a testing strategy covering:
+
+Authentication:
+
+- Registration.
+- Login.
+- Logout.
+- Password recovery.
+- Role restrictions.
+
+Public website:
+
+- Job discovery.
+- Search.
+- Filtering.
+- Pagination.
+- Job detail navigation.
+
+User dashboard:
+
+- Profile updates.
+- Resume uploads.
+- Saved jobs.
+- Application submissions.
+
+Admin:
+
+- Protected access.
+- Job CRUD.
+- Company management.
+- Application management.
+- User management.
+
+Security:
+
+- RLS policies.
+- Unauthorized data access.
+- Role escalation attempts.
+- Private file access.
+- Server-side validation.
+
+Use automated tests for critical business logic and end-to-end tests for major user workflows.
+
+---
+
+# 17. ENVIRONMENT VARIABLES
+
+Create a documented .env.example.
+
+Frontend variables:
+
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+
+Use only publishable client credentials in frontend code.
+
+Any administrative provisioning, privileged operations or server-side integrations must use secure server-side environment variables.
+
+Never expose:
+
+- Supabase service-role keys.
+- Database passwords.
+- Private API secrets.
+- Admin provisioning secrets.
+
+---
+
+# 18. IMPLEMENTATION STRATEGY
+
+Work in the following phases.
+
+PHASE 1 – Foundation:
+
+- Inspect the project.
+- Establish architecture.
+- Configure dependencies.
+- Build design tokens.
+- Create routing.
+- Set up Supabase connection.
+
+PHASE 2 – Public experience:
+
+- Homepage.
+- Job listings.
+- Search and filters.
+- Job detail pages.
+- Companies.
+- Contact page.
+
+PHASE 3 – Authentication:
+
+- Registration.
+- Login.
+- Password recovery.
+- User roles.
+- Protected routes.
+
+PHASE 4 – User dashboard:
+
+- Profile.
+- Resumes.
+- Saved jobs.
+- Applications.
+- Application tracking.
+
+PHASE 5 – Admin portal:
+
+- Admin dashboard.
+- Job management.
+- Company management.
+- Applications.
+- Users.
+- Categories.
+- Settings.
+
+PHASE 6 – Backend:
+
+- Database migrations.
+- RLS.
+- Storage.
+- Secure backend operations.
+- Search and pagination.
+
+PHASE 7 – Quality:
+
+- Responsive testing.
+- Security testing.
+- Performance optimization.
+- SEO.
+- Accessibility.
+- Production deployment.
+
+---
+
+# 19. STRICT DEVELOPMENT RULES
+
+1. Build the complete application, not just a homepage.
+2. Do not skip the admin portal.
+3. Do not introduce employer job publishing in this version.
+4. Do not expose admin privileges to public users.
+5. Do not use mock authentication.
+6. Do not use hardcoded production data.
+7. Do not use insecure frontend-only authorization.
+8. Do not expose private storage files.
+9. Do not leave important functionality unfinished.
+10. Do not create dead buttons.
+11. Do not sacrifice usability for animations.
+12. Do not copy Awwwards websites directly.
+13. Do not create unnecessary dependencies.
+14. Do not duplicate components.
+15. Do not silently swallow errors.
+16. Do not overwrite existing project configuration without inspecting it.
+17. If an existing project is supplied, preserve working functionality and integrate changes incrementally.
+
+---
+
+# 20. FINAL DELIVERABLE
+
+Deliver a complete working application with:
+
+- Premium responsive public website.
+- Functional global job discovery.
+- Job detail pages.
+- Authentication.
+- Job seeker dashboard.
+- Resume management.
+- Application submission and tracking.
+- Admin dashboard.
+- Admin job management.
+- Company management.
+- Application management.
+- User management.
+- Supabase database.
+- Database migrations.
+- RLS policies.
+- Storage configuration.
+- SEO.
+- Error handling.
+- Testing.
+- Deployment documentation.
+- Environment variable documentation.
+
+Before declaring completion:
+
+1. Verify all routes.
+2. Verify database connectivity.
+3. Verify authentication.
+4. Verify user/admin authorization.
+5. Verify RLS.
+6. Verify file upload permissions.
+7. Verify job application workflow.
+8. Verify all CRUD operations.
+9. Verify responsive layouts.
+10. Run the production build and fix all build errors.
+
+Provide a README with complete local setup, Supabase setup, migrations, seed data, admin provisioning, testing and deployment instructions.
+
+Start by inspecting the existing project and reporting its current structure. Then implement the application phase by phase.
+
+Do not stop after creating a design mockup. Continue until the application is fully functional and all critical workflows have been verified.
