@@ -12,6 +12,13 @@ export default defineConfig(() => {
       },
     },
     server: {
+      proxy: {
+        '/api/himalayas': {
+          target: 'https://himalayas.app',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api\/himalayas/, ''),
+        },
+      },
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',

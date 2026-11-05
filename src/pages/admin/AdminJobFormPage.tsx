@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { DataStore } from '../../services/store';
 import { Job, WorkplaceType, EmploymentType, ExperienceLevel, SalaryPeriod, JobStatus } from '../../types';
-import { ArrowLeft, Save, AlertCircle, Check } from 'lucide-react';
+import { ArrowLeft, Save, AlertCircle, Check, ExternalLink, Globe } from 'lucide-react';
 
 export const AdminJobFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -33,6 +33,8 @@ export const AdminJobFormPage: React.FC = () => {
     salaryCurrency: 'USD',
     salaryPeriod: 'yearly' as SalaryPeriod,
     salaryVisible: true,
+    applicationMode: 'internal' as 'internal' | 'external',
+    externalApplicationUrl: '',
     skills: 'Figma, Design Systems',
     status: 'published' as JobStatus,
     isFeatured: false,
@@ -65,6 +67,8 @@ export const AdminJobFormPage: React.FC = () => {
           salaryCurrency: existing.salary_currency || 'USD',
           salaryPeriod: existing.salary_period || 'yearly',
           salaryVisible: existing.salary_visible,
+          applicationMode: existing.application_mode || (existing.external_application_url ? 'external' : 'internal'),
+          externalApplicationUrl: existing.external_application_url || '',
           skills: (existing.skills || []).join(', '),
           status: existing.status,
           isFeatured: existing.is_featured,
@@ -120,7 +124,8 @@ export const AdminJobFormPage: React.FC = () => {
         salary_currency: formData.salaryCurrency,
         salary_period: formData.salaryPeriod,
         salary_visible: formData.salaryVisible,
-        application_mode: 'internal' as const,
+        application_mode: (formData.externalApplicationUrl.trim() || formData.applicationMode === 'external') ? ('external' as const) : ('internal' as const),
+        external_application_url: formData.externalApplicationUrl.trim() || undefined,
         status: formData.status,
         is_featured: formData.isFeatured,
         skills: formData.skills
@@ -279,6 +284,7 @@ export const AdminJobFormPage: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, experienceLevel: e.target.value as ExperienceLevel })}
                 className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg focus:border-neutral-900 focus:outline-none cursor-pointer"
               >
+                <option value="freshers">Freshers / Graduate (0-1 yr)</option>
                 <option value="entry">Entry (1-2 yrs)</option>
                 <option value="mid">Mid-Level (3-5 yrs)</option>
                 <option value="senior">Senior (5+ yrs)</option>
@@ -313,10 +319,103 @@ export const AdminJobFormPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Application Link & Redirection */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between border-b border-neutral-100 pb-2">
+            <h3 className="font-semibold text-neutral-900 text-sm">
+              3. Application Link & Redirection
+            </h3>
+            <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400">
+              Apply Routing
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-xs">
+              <label className="flex items-center gap-2 cursor-pointer font-medium text-neutral-800">
+                <input
+                  type="radio"
+                  name="applicationMode"
+                  value="internal"
+                  checked={formData.applicationMode === 'internal' && !formData.externalApplicationUrl.trim()}
+                  onChange={() => setFormData({ ...formData, applicationMode: 'internal', externalApplicationUrl: '' })}
+                  className="text-neutral-900 focus:ring-0"
+                />
+                <span>Internal Platform Application (Collect resumes on Grail)</span>
+              </label>
+
+              <label className="flex items-center gap-2 cursor-pointer font-medium text-neutral-800">
+                <input
+                  type="radio"
+                  name="applicationMode"
+                  value="external"
+                  checked={formData.applicationMode === 'external' || Boolean(formData.externalApplicationUrl.trim())}
+                  onChange={() => setFormData({ ...formData, applicationMode: 'external' })}
+                  className="text-neutral-900 focus:ring-0"
+                />
+                <span>External Application Link (Direct Redirection)</span>
+              </label>
+            </div>
+
+            <div className="space-y-1.5 pt-1">
+              <div className="flex items-center justify-between">
+                <label className="font-semibold text-neutral-900 block">
+                  Application Link URL
+                </label>
+                {formData.externalApplicationUrl.trim() && (
+                  <span className="text-[10px] font-mono text-emerald-600 font-semibold flex items-center gap-1">
+                    <Check className="w-3 h-3" />
+                    <span>Direct Redirect Enabled</span>
+                  </span>
+                )}
+              </div>
+              <div className="relative">
+                <input
+                  type="url"
+                  value={formData.externalApplicationUrl}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setFormData({
+                      ...formData,
+                      externalApplicationUrl: val,
+                      applicationMode: val.trim() ? 'external' : formData.applicationMode,
+                    });
+                  }}
+                  placeholder="https://... (e.g. https://himalayas.app/jobs/..., Greenhouse, Lever, Workday, or Company Careers URL)"
+                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg focus:border-neutral-900 focus:outline-none font-mono text-xs"
+                />
+              </div>
+              <p className="text-[11px] text-neutral-500 leading-relaxed">
+                Add an application link here: if a URL is provided, when a candidate applies for this post (from the job board or detail page), they will be <strong>directly redirected</strong> to that URL link in a new tab.
+              </p>
+
+              {formData.externalApplicationUrl.trim() && (
+                <div className="p-3 bg-neutral-900 text-white rounded-lg text-xs flex items-center justify-between mt-2 font-mono">
+                  <div className="flex items-center gap-2 truncate">
+                    <Globe className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span className="truncate text-[11px] text-neutral-300">
+                      Redirects to: <strong className="text-white">{formData.externalApplicationUrl}</strong>
+                    </span>
+                  </div>
+                  <a
+                    href={formData.externalApplicationUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded text-[10px] text-white flex items-center gap-1 transition-colors shrink-0"
+                  >
+                    <span>Test Link</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
         {/* Compensation */}
         <div className="space-y-4">
           <h3 className="font-semibold text-neutral-900 text-sm border-b border-neutral-100 pb-2">
-            3. Compensation Transparency
+            4. Compensation Transparency
           </h3>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -372,7 +471,7 @@ export const AdminJobFormPage: React.FC = () => {
         {/* Detailed Lists */}
         <div className="space-y-4">
           <h3 className="font-semibold text-neutral-900 text-sm border-b border-neutral-100 pb-2">
-            4. Requirements, Responsibilities & Skills
+            5. Requirements, Responsibilities & Skills
           </h3>
 
           <div>

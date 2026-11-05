@@ -188,6 +188,40 @@ const INITIAL_COMPANIES: Company[] = [
     created_at: new Date(Date.now() - 180 * 86400000).toISOString(),
     updated_at: new Date(Date.now() - 6 * 86400000).toISOString(),
   },
+  {
+    id: 'comp-linear',
+    name: 'Linear',
+    slug: 'linear',
+    logo_url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=160&auto=format&fit=crop&q=80',
+    cover_url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200&auto=format&fit=crop&q=80',
+    description: 'Linear is the issue tracking tool built for high-performance product teams. Designed for speed, craft, and precision.',
+    website: 'https://linear.app',
+    industry: 'Developer Productivity Software',
+    company_size: '50-100',
+    headquarters: 'San Francisco, CA',
+    country: 'United States',
+    city: 'San Francisco',
+    social_links: { twitter: 'https://twitter.com/linear', linkedin: 'https://linkedin.com/company/linear-app' },
+    created_at: new Date(Date.now() - 40 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+  },
+  {
+    id: 'comp-supabase',
+    name: 'Supabase',
+    slug: 'supabase',
+    logo_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=160&auto=format&fit=crop&q=80',
+    cover_url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&auto=format&fit=crop&q=80',
+    description: 'Supabase is an open source Firebase alternative. Build production-grade backends in a weekend with Postgres, Auth, and Edge Functions.',
+    website: 'https://supabase.com',
+    industry: 'Cloud Infrastructure & Open Source',
+    company_size: '100-200',
+    headquarters: 'Singapore',
+    country: 'Worldwide',
+    city: 'Remote Worldwide',
+    social_links: { twitter: 'https://twitter.com/supabase', linkedin: 'https://linkedin.com/company/supabase' },
+    created_at: new Date(Date.now() - 35 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+  },
 ];
 
 const INITIAL_JOBS: Job[] = [
@@ -553,6 +587,134 @@ const INITIAL_JOBS: Job[] = [
     updated_at: new Date(Date.now() - 9 * 86400000).toISOString(),
     skills: ['Design Systems', 'Figma', 'React', 'Typography'],
   },
+  {
+    id: 'job-9',
+    title: 'Senior Product Designer (Remote)',
+    slug: 'senior-product-designer-remote-linear',
+    company_id: 'comp-linear',
+    category_id: 'cat-1',
+    description: 'Linear is hiring a Senior Product Designer to craft workflows for high-performance product organizations. Synchronized via the Himalayas remote network.',
+    responsibilities: [
+      'Design features and workflows that enable high-velocity product teams to build better software',
+      'Maintain extreme craft quality across micro-interactions, dark mode aesthetics, and keyboard shortcuts',
+      'Contribute to Linear Design Systems with unified tokens across desktop and mobile',
+    ],
+    requirements: [
+      '5+ years designing world-class developer tools or productivity software',
+      'Proven experience shipping polished, complex web interfaces',
+      'Obsessive attention to detail in visual design, typography, and interaction timing',
+    ],
+    qualifications: ['Distinguished portfolio of software applications with exceptional interaction polish'],
+    benefits: [
+      '$160,000 – $210,000 USD base salary + equity',
+      '100% remote worldwide with flexible working hours',
+      'Health insurance, 401(k), wellness stipends, and ergonomic workspace allowances',
+    ],
+    location: 'Remote Worldwide',
+    city: 'San Francisco',
+    country: 'United States',
+    workplace_type: 'remote',
+    employment_type: 'full-time',
+    experience_level: 'senior',
+    salary_min: 160000,
+    salary_max: 210000,
+    salary_currency: 'USD',
+    salary_period: 'yearly',
+    salary_visible: true,
+    application_mode: 'external',
+    external_application_url: 'https://himalayas.app/companies/linear/jobs/senior-product-designer',
+    status: 'published',
+    is_featured: true,
+    published_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    skills: ['Figma', 'Design Systems', 'UX Research', 'Typography'],
+  },
+  {
+    id: 'job-10',
+    title: 'Remote Creative Technologist & WebGL Developer',
+    slug: 'remote-creative-technologist-webgl-supabase',
+    company_id: 'comp-supabase',
+    category_id: 'cat-2',
+    description: 'Supabase is hiring a Creative Technologist to craft interactive launch week experiences, 3D interactive graphics, and generative web experiences. Synchronized via Himalayas remote network.',
+    responsibilities: [
+      'Build generative 3D visualizers and interactive canvas showcases for Supabase launches',
+      'Push the technical envelope with Three.js, WebGL shaders, and high-performance Web Workers',
+      'Collaborate with the design team on viral developer marketing experiences',
+    ],
+    requirements: [
+      'Extensive mastery of Three.js, GLSL, and modern TypeScript frontend stacks',
+      'Track record of building Awwwards-caliber interactive web platforms',
+      'Comfortable in an open-source, remote-first global engineering organization',
+    ],
+    qualifications: ['Portfolio of interactive WebGL / canvas experiments and live commercial web experiences'],
+    benefits: [
+      '$140,000 – $180,000 USD base salary + stock options',
+      'Fully remote globally with home office budget and annual team summits',
+      'Comprehensive healthcare and generous time off',
+    ],
+    location: 'Remote Worldwide',
+    city: 'Singapore',
+    country: 'Worldwide',
+    workplace_type: 'remote',
+    employment_type: 'full-time',
+    experience_level: 'senior',
+    salary_min: 140000,
+    salary_max: 180000,
+    salary_currency: 'USD',
+    salary_period: 'yearly',
+    salary_visible: true,
+    application_mode: 'external',
+    external_application_url: 'https://himalayas.app/companies/supabase/jobs/creative-technologist',
+    status: 'published',
+    is_featured: true,
+    published_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+    created_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+    skills: ['Three.js / WebGL', 'React', 'Tailwind CSS', 'Motion Design'],
+  },
+  {
+    id: 'job-11',
+    title: 'Junior Web & UI Designer (Freshers Welcome)',
+    slug: 'junior-web-ui-designer-freshers-welcome-webwavers',
+    company_id: 'comp-4',
+    category_id: 'cat-1',
+    description: 'Webwavers is opening applications for creative graduates and freshers passionate about modern interactive digital design. You will receive 1-on-1 mentorship from lead art directors and contribute to award-winning websites.',
+    responsibilities: [
+      'Learn and build production UI components in Figma following tokenized design guidelines',
+      'Assist in responsive layout checks and micro-animation prototyping',
+      'Collaborate with frontend developers on design quality assurance',
+    ],
+    requirements: [
+      '0–1 year of experience (fresh graduates with personal portfolio or coursework are encouraged to apply)',
+      'Basic familiarity with Figma and core visual design fundamentals (spacing, typography, hierarchy)',
+      'High curiosity, eagerness to learn, and strong design taste',
+    ],
+    qualifications: ['Personal design portfolio showcasing student projects, passion projects, or conceptual web redesigns'],
+    benefits: [
+      'Competitive starting salary €32,000 – €42,000 / year',
+      'Comprehensive mentorship program by senior design leaders',
+      'MacBook Pro hardware setup and dedicated learning stipend',
+    ],
+    location: 'Remote Worldwide',
+    city: 'Berlin',
+    country: 'Germany',
+    workplace_type: 'remote',
+    employment_type: 'full-time',
+    experience_level: 'freshers',
+    salary_min: 32000,
+    salary_max: 42000,
+    salary_currency: 'EUR',
+    salary_period: 'yearly',
+    salary_visible: true,
+    application_mode: 'internal',
+    status: 'published',
+    is_featured: true,
+    published_at: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    skills: ['Figma', 'Typography', 'Design Systems', 'Motion Design'],
+  },
 ];
 
 // Preconfigured Users
@@ -840,8 +1002,13 @@ export class DataStore {
 
   // --- Companies ---
   static getCompanies(): Company[] {
-    const companies = getStorage<Company[]>(KEY_COMPANIES, INITIAL_COMPANIES);
-    const jobs = this.getJobs();
+    let companies = getStorage<Company[]>(KEY_COMPANIES, INITIAL_COMPANIES);
+    const missingCompanies = INITIAL_COMPANIES.filter((ic) => !companies.some((c) => c.id === ic.id));
+    if (missingCompanies.length > 0) {
+      companies = [...companies, ...missingCompanies];
+      setStorage(KEY_COMPANIES, companies);
+    }
+    const jobs = getStorage<Job[]>(KEY_JOBS, INITIAL_JOBS);
     return companies.map((c) => ({
       ...c,
       active_jobs_count: jobs.filter((j) => j.company_id === c.id && j.status === 'published').length,
@@ -938,8 +1105,13 @@ export class DataStore {
 
   // --- Jobs Management ---
   static getJobs(): Job[] {
-    const jobs = getStorage<Job[]>(KEY_JOBS, INITIAL_JOBS);
-    const companies = getStorage<Company[]>(KEY_COMPANIES, INITIAL_COMPANIES);
+    let jobs = getStorage<Job[]>(KEY_JOBS, INITIAL_JOBS);
+    const missingJobs = INITIAL_JOBS.filter((ij) => !jobs.some((j) => j.id === ij.id));
+    if (missingJobs.length > 0) {
+      jobs = [...jobs, ...missingJobs];
+      setStorage(KEY_JOBS, jobs);
+    }
+    const companies = this.getCompanies();
     const categories = getStorage<Category[]>(KEY_CATEGORIES, INITIAL_CATEGORIES);
 
     return jobs.map((job) => ({

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Job, Resume } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { DataStore } from '../../services/store';
-import { X, Upload, Check, AlertCircle, FileText } from 'lucide-react';
+import { X, Upload, Check, AlertCircle, FileText, ExternalLink, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface ApplyModalProps {
@@ -26,6 +26,68 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ job, isOpen, onClose, on
   const [submitting, setSubmitting] = useState(false);
 
   if (!isOpen) return null;
+
+  // External / Himalayas application link redirect
+  if (job.external_application_url || job.application_mode === 'external') {
+    const targetUrl = job.external_application_url || 'https://himalayas.app';
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div className="bg-white rounded-xl max-w-md w-full p-6 sm:p-8 space-y-5 text-center relative shadow-2xl">
+          <button
+            onClick={onClose}
+            className="absolute top-5 right-5 text-neutral-400 hover:text-neutral-900 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          <div className="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center mx-auto text-neutral-900">
+            <Globe className="w-6 h-6" />
+          </div>
+
+          <div className="space-y-1">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
+              Himalayas Remote Sync · Direct Application
+            </span>
+            <h3 className="font-display font-bold text-xl text-neutral-900">
+              Apply to {job.company?.name || 'Company'}
+            </h3>
+            <p className="text-xs text-neutral-600 leading-relaxed pt-1">
+              This position requires applying directly through the employer's official portal.
+            </p>
+          </div>
+
+          <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 text-left space-y-1">
+            <span className="text-[10px] uppercase font-mono text-neutral-400 font-semibold block">
+              Verified Application Link
+            </span>
+            <p className="text-xs text-neutral-700 font-mono break-all line-clamp-2">
+              {targetUrl}
+            </p>
+          </div>
+
+          <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2.5 border border-neutral-200 rounded text-xs font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors flex-1"
+            >
+              Cancel
+            </button>
+            <a
+              href={targetUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onClose}
+              className="px-4 py-2.5 bg-[#121212] text-white rounded text-xs font-semibold hover:bg-neutral-800 transition-colors flex items-center justify-center gap-1.5 flex-1 shadow-sm"
+            >
+              <span>Go to Application Link</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!user) {
     return (

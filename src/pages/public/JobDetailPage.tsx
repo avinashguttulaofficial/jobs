@@ -86,6 +86,19 @@ export const JobDetailPage: React.FC = () => {
           </Link>
 
           <div className="flex items-center gap-3">
+            {job.external_application_url && (
+              <a
+                href={job.external_application_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3.5 py-1.5 bg-[#121212] text-white rounded text-xs font-semibold hover:bg-neutral-800 transition-colors flex items-center gap-1.5 font-mono shadow-xs"
+                title="Directly redirect to external application link"
+              >
+                <span>Apply on Himalayas</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            )}
+
             <button
               onClick={handleShare}
               className="p-2 text-neutral-600 hover:text-neutral-900 border border-neutral-200 rounded hover:bg-neutral-50 transition-colors flex items-center gap-1.5"
@@ -323,6 +336,43 @@ export const JobDetailPage: React.FC = () => {
                 >
                   View Application Status
                 </Link>
+              </div>
+            ) : job.external_application_url || job.application_mode === 'external' ? (
+              <div className="space-y-3">
+                <a
+                  href={job.external_application_url || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 bg-[#121212] text-white rounded-lg text-xs font-semibold hover:bg-neutral-800 transition-colors uppercase tracking-wider font-mono shadow-sm flex items-center justify-center gap-2 group text-center"
+                >
+                  <span>Apply on Company Site / Himalayas</span>
+                  <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+
+                <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 text-[11px] text-neutral-600 space-y-1">
+                  <div className="flex items-center gap-1.5 font-semibold text-neutral-900">
+                    <Globe className="w-3.5 h-3.5 text-neutral-700" />
+                    <span>Direct Application Link</span>
+                  </div>
+                  <p className="text-neutral-500 truncate font-mono text-[10px]">
+                    {job.external_application_url}
+                  </p>
+                  <p className="text-neutral-400 text-[10px] leading-relaxed">
+                    Clicking redirects directly to the official remote application link hosted on Himalayas.
+                  </p>
+                </div>
+
+                <button
+                  onClick={handleSaveToggle}
+                  className={`w-full py-2.5 border rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-colors ${
+                    isSaved
+                      ? 'bg-neutral-100 border-neutral-300 text-neutral-900'
+                      : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                  }`}
+                >
+                  <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current' : ''}`} />
+                  <span>{isSaved ? 'Saved to Dashboard' : 'Save Job'}</span>
+                </button>
               </div>
             ) : (
               <div className="space-y-3">

@@ -13,6 +13,7 @@ import {
   Sliders,
   ShieldAlert,
   ShieldCheck,
+  Globe,
   LogOut,
   ExternalLink,
   Menu,
@@ -61,6 +62,7 @@ export const AdminLayout: React.FC = () => {
   const navLinks = [
     { label: 'Dashboard', path: '/admin', end: true, icon: LayoutDashboard },
     { label: 'Job Listings', path: '/admin/jobs', icon: Briefcase },
+    { label: 'Himalayas Sync', path: '/admin/himalayas', icon: Globe },
     { label: 'Candidate Applications', path: '/admin/applications', icon: FileCheck2 },
     { label: 'Studios & Companies', path: '/admin/companies', icon: Building2 },
     { label: 'Registered Users', path: '/admin/users', icon: Users },

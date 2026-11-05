@@ -170,7 +170,7 @@ export const ProfileTab: React.FC = () => {
               type="text"
               value={formData.yearsOfExperience}
               onChange={(e) => setFormData({ ...formData, yearsOfExperience: e.target.value })}
-              placeholder="e.g. 6+ years or Senior Level (5-8 yrs)"
+              placeholder="e.g. Freshers (0-1 yr), 3-5 years, or Senior (5+ yrs)"
               className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg focus:border-neutral-900 focus:outline-none"
             />
           </div>

@@ -154,6 +154,11 @@ export const JobsPage: React.FC = () => {
         <p className="text-neutral-600 text-sm sm:text-lg font-medium max-w-xl mx-auto pt-2">
           Latest Vacancies in Web Design, UX/UI Design, and Creative Engineering
         </p>
+
+        <div className="flex items-center justify-center gap-2 text-[11px] font-mono text-neutral-500 pt-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span>Synchronized with Himalayas Remote Network (112,000+ roles)</span>
+        </div>
       </div>
 
       {/* Control Filter Bar (matching screenshot 5) */}
@@ -233,6 +238,7 @@ export const JobsPage: React.FC = () => {
               className="bg-neutral-50 border border-neutral-200 hover:border-neutral-400 text-xs text-neutral-800 rounded-lg px-3 py-2 focus:outline-none cursor-pointer"
             >
               <option value="all">Experience: All</option>
+              <option value="freshers">Freshers / Graduate (0-1 yr)</option>
               <option value="entry">Entry (1-2 yrs)</option>
               <option value="mid">Mid-Level (3-5 yrs)</option>
               <option value="senior">Senior (5+ yrs)</option>
@@ -323,6 +329,7 @@ export const JobsPage: React.FC = () => {
               className="bg-neutral-50 border border-neutral-200 p-2 rounded"
             >
               <option value="all">Experience: All</option>
+              <option value="freshers">Freshers / Graduate (0-1 yr)</option>
               <option value="entry">Entry (1-2 yrs)</option>
               <option value="mid">Mid-Level (3-5 yrs)</option>
               <option value="senior">Senior (5+ yrs)</option>

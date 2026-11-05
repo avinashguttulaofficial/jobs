@@ -59,7 +59,7 @@ export interface Skill {
 
 export type WorkplaceType = 'remote' | 'hybrid' | 'on-site';
 export type EmploymentType = 'full-time' | 'part-time' | 'contract' | 'freelance' | 'internship';
-export type ExperienceLevel = 'entry' | 'mid' | 'senior' | 'lead' | 'executive';
+export type ExperienceLevel = 'freshers' | 'entry' | 'mid' | 'senior' | 'lead' | 'executive';
 export type SalaryPeriod = 'hourly' | 'monthly' | 'yearly';
 export type JobStatus = 'draft' | 'published' | 'expired' | 'filled' | 'archived';
 export type ApplicationMode = 'internal' | 'external';

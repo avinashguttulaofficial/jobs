@@ -13,6 +13,7 @@ import {
   CheckCircle,
   EyeOff,
   Filter,
+  Globe,
 } from 'lucide-react';
 
 export const AdminJobsPage: React.FC = () => {
@@ -82,13 +83,23 @@ export const AdminJobsPage: React.FC = () => {
           </h1>
         </div>
 
-        <Link
-          to="/admin/jobs/new"
-          className="px-4 py-2 bg-[#121212] text-white rounded-lg text-xs font-semibold hover:bg-neutral-800 transition-colors flex items-center gap-1.5 shadow-sm shrink-0"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          <span>Create New Job</span>
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/admin/himalayas"
+            className="px-3.5 py-2 bg-white border border-neutral-300 text-neutral-800 rounded-lg text-xs font-semibold hover:bg-neutral-50 transition-colors flex items-center gap-1.5 shadow-xs shrink-0"
+          >
+            <Globe className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Himalayas Live Sync</span>
+          </Link>
+
+          <Link
+            to="/admin/jobs/new"
+            className="px-4 py-2 bg-[#121212] text-white rounded-lg text-xs font-semibold hover:bg-neutral-800 transition-colors flex items-center gap-1.5 shadow-sm shrink-0"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Create New Job</span>
+          </Link>
+        </div>
       </div>
 
       {notification && (
@@ -150,9 +161,23 @@ export const AdminJobsPage: React.FC = () => {
                     >
                       {job.title}
                     </Link>
-                    <span className="text-[11px] font-mono text-neutral-400">
-                      {job.company?.name || 'Studio'} · {job.slug}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
+                      <span className="text-[11px] font-mono text-neutral-400">
+                        {job.company?.name || 'Studio'} · {job.slug}
+                      </span>
+                      {job.external_application_url && (
+                        <a
+                          href={job.external_application_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 bg-neutral-900 text-white rounded hover:bg-neutral-800 transition-colors"
+                          title={`Direct Application Link: ${job.external_application_url}`}
+                        >
+                          <span>Direct Apply</span>
+                          <ExternalLink className="w-2.5 h-2.5" />
+                        </a>
+                      )}
+                    </div>
                   </td>
 
                   <td className="py-3.5 px-4 text-neutral-700">

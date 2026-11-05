@@ -42,6 +42,7 @@ import { AdminMessagesPage } from './pages/admin/AdminMessagesPage';
 import { AdminSubscribersPage } from './pages/admin/AdminSubscribersPage';
 import { AdminSettingsPage } from './pages/admin/AdminSettingsPage';
 import { AdminManagementPage } from './pages/admin/AdminManagementPage';
+import { AdminHimalayasPage } from './pages/admin/AdminHimalayasPage';
 
 // Public Layout Container
 const PublicLayout: React.FC = () => {
@@ -95,6 +96,7 @@ export default function App() {
             <Route path="jobs" element={<AdminJobsPage />} />
             <Route path="jobs/new" element={<AdminJobFormPage />} />
             <Route path="jobs/:id/edit" element={<AdminJobFormPage />} />
+            <Route path="himalayas" element={<AdminHimalayasPage />} />
             <Route path="applications" element={<AdminApplicationsPage />} />
             <Route path="companies" element={<AdminCompaniesPage />} />
             <Route path="users" element={<AdminUsersPage />} />
