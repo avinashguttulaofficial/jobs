@@ -14,6 +14,8 @@ import {
   MessageSquare,
   X,
   ExternalLink,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 
 export const AdminApplicationsPage: React.FC = () => {
@@ -33,6 +35,9 @@ export const AdminApplicationsPage: React.FC = () => {
     setTimeout(() => setNotice(null), 3000);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   const filtered = useMemo(() => {
     return applications.filter((app) => {
       if (searchTerm) {
@@ -47,6 +52,24 @@ export const AdminApplicationsPage: React.FC = () => {
       return true;
     });
   }, [applications, searchTerm, statusFilter]);
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
+  const activePage = Math.min(Math.max(currentPage, 1), totalPages);
+  const paginatedApps = useMemo(() => {
+    return filtered.slice((activePage - 1) * itemsPerPage, activePage * itemsPerPage);
+  }, [filtered, activePage, itemsPerPage]);
+
+  const handlePageChange = (newPage: number) => {
+    const clamped = Math.min(Math.max(newPage, 1), totalPages);
+    setCurrentPage(clamped);
+  };
+
+  const getPaginationNumbers = (current: number, total: number) => {
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+    if (current <= 4) return [1, 2, 3, 4, 5, '...', total];
+    if (current >= total - 3) return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+    return [1, '...', current - 1, current, current + 1, '...', total];
+  };
 
   const handleStatusUpdate = (e: React.FormEvent) => {
     e.preventDefault();
@@ -143,7 +166,10 @@ export const AdminApplicationsPage: React.FC = () => {
           <input
             type="text"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1);
+            }}
             placeholder="Search applicant name, email, or job title..."
             className="w-full pl-9 pr-3 py-2 bg-neutral-50 rounded-lg text-xs border border-neutral-200 focus:outline-none focus:border-neutral-900"
           />
@@ -152,7 +178,10 @@ export const AdminApplicationsPage: React.FC = () => {
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
+            onChange={(e) => {
+              setStatusFilter(e.target.value);
+              setCurrentPage(1);
+            }}
             className="bg-neutral-50 border border-neutral-200 text-xs text-neutral-800 rounded-lg px-3 py-2 focus:outline-none cursor-pointer w-full sm:w-auto"
           >
             <option value="all">All Application Statuses</option>
@@ -181,7 +210,7 @@ export const AdminApplicationsPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-100">
-              {filtered.map((app) => (
+              {paginatedApps.map((app) => (
                 <tr key={app.id} className="hover:bg-neutral-50/60 transition-colors">
                   <td className="py-3.5 px-4">
                     <span className="font-bold text-neutral-900 block">{app.user?.full_name}</span>
@@ -233,6 +262,75 @@ export const AdminApplicationsPage: React.FC = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="p-4 border-t border-neutral-200 bg-neutral-50/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div className="font-mono text-neutral-500">
+            {filtered.length > 0 ? (
+              <>
+                Showing <strong className="text-neutral-900 font-semibold">{(activePage - 1) * itemsPerPage + 1}</strong> to{' '}
+                <strong className="text-neutral-900 font-semibold">{Math.min(activePage * itemsPerPage, filtered.length)}</strong> of{' '}
+                <strong className="text-neutral-900 font-semibold">{filtered.length}</strong> applications
+                <span className="text-neutral-400 ml-1.5">(Page {activePage} of {totalPages})</span>
+              </>
+            ) : (
+              <span>No applications matching filters</span>
+            )}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap justify-center">
+              <button
+                onClick={() => handlePageChange(activePage - 1)}
+                disabled={activePage <= 1}
+                className="h-8 px-2.5 sm:px-3 border border-neutral-200 bg-white rounded-lg hover:bg-neutral-100 disabled:opacity-30 disabled:cursor-not-allowed text-xs font-medium flex items-center gap-1 transition-colors shadow-2xs"
+                title="Previous Page"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Prev</span>
+              </button>
+
+              {getPaginationNumbers(activePage, totalPages).map((item, idx) => {
+                if (item === '...') {
+                  return (
+                    <span
+                      key={`ellipsis-${idx}`}
+                      className="w-8 h-8 flex items-center justify-center text-xs font-mono text-neutral-400 select-none"
+                    >
+                      …
+                    </span>
+                  );
+                }
+                const p = item as number;
+                const isActive = p === activePage;
+                return (
+                  <button
+                    key={p}
+                    onClick={() => handlePageChange(p)}
+                    className={`w-8 h-8 rounded-lg text-xs font-mono font-semibold transition-all ${
+                      isActive
+                        ? 'bg-[#121212] text-white shadow-xs'
+                        : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-neutral-100'
+                    }`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {p}
+                  </button>
+                );
+              })}
+
+              <button
+                onClick={() => handlePageChange(activePage + 1)}
+                disabled={activePage >= totalPages}
+                className="h-8 px-2.5 sm:px-3 border border-neutral-200 bg-white rounded-lg hover:bg-neutral-100 disabled:opacity-30 disabled:cursor-not-allowed text-xs font-medium flex items-center gap-1 transition-colors shadow-2xs"
+                title="Next Page"
+              >
+                <span className="hidden sm:inline">Next</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

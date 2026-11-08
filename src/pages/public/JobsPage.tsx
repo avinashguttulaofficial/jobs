@@ -18,6 +18,8 @@ export const JobsPage: React.FC = () => {
   const featuredOnly = searchParams.get('featured') === 'true';
   const sortParam = searchParams.get('sort') || 'latest';
   const pageParam = parseInt(searchParams.get('page') || '1', 10);
+  const limitParam = parseInt(searchParams.get('limit') || '9', 10);
+  const itemsPerPage = [9, 18, 36, 70].includes(limitParam) ? limitParam : 9;
 
   // Local state for debounced search and active filter values
   const [searchTerm, setSearchTerm] = useState(queryParam);
@@ -37,7 +39,9 @@ export const JobsPage: React.FC = () => {
     } else {
       newParams.set(key, value);
     }
-    newParams.set('page', '1'); // reset to page 1 on filter change
+    if (key !== 'page') {
+      newParams.delete('page'); // reset to page 1 on filter change
+    }
     setSearchParams(newParams);
   };
 
@@ -120,11 +124,35 @@ export const JobsPage: React.FC = () => {
     return list.sort((a, b) => new Date(b.published_at || b.created_at).getTime() - new Date(a.published_at || a.created_at).getTime());
   }, [filteredJobs, sortParam]);
 
-  // Pagination (6 jobs per page)
-  const itemsPerPage = 6;
+  // Pagination
   const totalPages = Math.ceil(sortedJobs.length / itemsPerPage) || 1;
   const currentPage = Math.min(Math.max(pageParam, 1), totalPages);
   const paginatedJobs = sortedJobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const getPaginationNumbers = (current: number, total: number) => {
+    if (total <= 7) {
+      return Array.from({ length: total }, (_, i) => i + 1);
+    }
+    if (current <= 4) {
+      return [1, 2, 3, 4, 5, '...', total];
+    }
+    if (current >= total - 3) {
+      return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+    }
+    return [1, '...', current - 1, current, current + 1, '...', total];
+  };
+
+  const handlePageChange = (newPage: number) => {
+    const clamped = Math.min(Math.max(newPage, 1), totalPages);
+    const newParams = new URLSearchParams(searchParams);
+    if (clamped <= 1) {
+      newParams.delete('page');
+    } else {
+      newParams.set('page', String(clamped));
+    }
+    setSearchParams(newParams);
+    window.scrollTo({ top: 350, behavior: 'smooth' });
+  };
 
   // Count active non-default filters
   const activeFiltersCount = [
@@ -360,6 +388,21 @@ export const JobsPage: React.FC = () => {
             </select>
           </div>
 
+          {/* Per-Page Selector */}
+          <div className="hidden sm:flex items-center gap-1.5 bg-neutral-50 border border-neutral-200 rounded px-2 py-0.5 text-xs text-neutral-600">
+            <span className="text-neutral-400 font-mono text-[11px]">Show:</span>
+            <select
+              value={itemsPerPage}
+              onChange={(e) => updateFilter('limit', e.target.value)}
+              className="bg-transparent text-xs font-semibold text-neutral-900 border-none focus:outline-none cursor-pointer"
+            >
+              <option value="9">9</option>
+              <option value="18">18</option>
+              <option value="36">36</option>
+              <option value="70">70 (All)</option>
+            </select>
+          </div>
+
           {/* View Mode Toggle */}
           <div className="flex items-center border border-neutral-200 rounded p-0.5 bg-white">
             <button
@@ -412,33 +455,47 @@ export const JobsPage: React.FC = () => {
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-neutral-200 pt-6">
-          <p className="text-xs text-neutral-500 font-mono">
-            Showing Page <span className="font-semibold text-neutral-900">{currentPage}</span> of{' '}
-            <span className="font-semibold text-neutral-900">{totalPages}</span>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-neutral-200 pt-6">
+          <p className="text-xs text-neutral-500 font-mono text-center sm:text-left">
+            Showing <strong className="font-semibold text-neutral-900">{(currentPage - 1) * itemsPerPage + 1}–{Math.min(currentPage * itemsPerPage, sortedJobs.length)}</strong> of{' '}
+            <strong className="font-semibold text-neutral-900">{sortedJobs.length}</strong> listings{' '}
+            <span className="text-neutral-400">(Page {currentPage} of {totalPages})</span>
           </p>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap justify-center">
             <button
-              onClick={() => updateFilter('page', String(currentPage - 1))}
+              onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage <= 1}
-              className="p-2 border border-neutral-200 rounded hover:bg-neutral-100 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium flex items-center gap-1"
+              className="h-8 px-2.5 sm:px-3 border border-neutral-200 rounded-lg hover:bg-neutral-100 disabled:opacity-30 disabled:cursor-not-allowed text-xs font-medium flex items-center gap-1 transition-colors"
+              title="Previous Page"
             >
               <ChevronLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Previous</span>
+              <span className="hidden sm:inline">Prev</span>
             </button>
 
-            {Array.from({ length: totalPages }).map((_, i) => {
-              const p = i + 1;
+            {getPaginationNumbers(currentPage, totalPages).map((item, idx) => {
+              if (item === '...') {
+                return (
+                  <span
+                    key={`ellipsis-${idx}`}
+                    className="w-8 h-8 flex items-center justify-center text-xs font-mono text-neutral-400 select-none"
+                  >
+                    …
+                  </span>
+                );
+              }
+              const p = item as number;
+              const isActive = p === currentPage;
               return (
                 <button
                   key={p}
-                  onClick={() => updateFilter('page', String(p))}
-                  className={`w-8 h-8 rounded text-xs font-mono font-medium transition-colors ${
-                    p === currentPage
-                      ? 'bg-[#121212] text-white'
-                      : 'hover:bg-neutral-100 text-neutral-700'
+                  onClick={() => handlePageChange(p)}
+                  className={`w-8 h-8 rounded-lg text-xs font-mono font-semibold transition-all ${
+                    isActive
+                      ? 'bg-[#121212] text-white shadow-xs'
+                      : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-neutral-100'
                   }`}
+                  aria-current={isActive ? 'page' : undefined}
                 >
                   {p}
                 </button>
@@ -446,9 +503,10 @@ export const JobsPage: React.FC = () => {
             })}
 
             <button
-              onClick={() => updateFilter('page', String(currentPage + 1))}
+              onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage >= totalPages}
-              className="p-2 border border-neutral-200 rounded hover:bg-neutral-100 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-medium flex items-center gap-1"
+              className="h-8 px-2.5 sm:px-3 border border-neutral-200 rounded-lg hover:bg-neutral-100 disabled:opacity-30 disabled:cursor-not-allowed text-xs font-medium flex items-center gap-1 transition-colors"
+              title="Next Page"
             >
               <span className="hidden sm:inline">Next</span>
               <ChevronRight className="w-4 h-4" />

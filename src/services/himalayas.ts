@@ -15,7 +15,9 @@ export interface HimalayasRawJob {
   currency?: string;
   seniority?: string[];
   locationRestrictions?: string[];
+  timezoneRestrictions?: number[];
   categories?: string[];
+  parentCategories?: string[];
   applicationLink?: string;
   pubDate?: number;
   guid?: string;
@@ -31,33 +33,47 @@ export class HimalayasService {
   private static baseUrl = '/api/himalayas/jobs/api';
 
   /**
-   * Fetch live jobs from the Himalayas Remote Jobs API
+   * Fetch live jobs from the Himalayas Remote Jobs API with multi-page stream support
    */
   static async fetchJobs(params: {
     limit?: number;
     cursor?: string;
-    query?: string;
+    pages?: number;
   } = {}): Promise<HimalayasApiResponse> {
     try {
-      const url = new URL(this.baseUrl, window.location.origin);
-      if (params.limit) url.searchParams.set('limit', String(params.limit));
-      if (params.cursor) url.searchParams.set('cursor', params.cursor);
+      const allJobs: HimalayasRawJob[] = [];
+      let currentCursor = params.cursor;
+      let totalCount = 0;
+      const pagesToFetch = params.pages ?? 4; // Fetch 4 pages (~80 live jobs) by default for comprehensive filter matches
 
-      const response = await fetch(url.toString(), {
-        headers: {
-          Accept: 'application/json',
-        },
-      });
+      for (let p = 0; p < pagesToFetch; p++) {
+        const url = new URL(this.baseUrl, window.location.origin);
+        url.searchParams.set('limit', String(params.limit || 20));
+        if (currentCursor) url.searchParams.set('cursor', currentCursor);
 
-      if (!response.ok) {
-        throw new Error(`Himalayas API responded with status ${response.status}`);
+        const response = await fetch(url.toString(), {
+          headers: {
+            Accept: 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Himalayas API responded with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        totalCount = data.totalCount || totalCount;
+        if (data.jobs && Array.isArray(data.jobs)) {
+          allJobs.push(...data.jobs);
+        }
+        currentCursor = data.nextCursor;
+        if (!currentCursor) break;
       }
 
-      const data = await response.json();
       return {
-        totalCount: data.totalCount || 0,
-        jobs: data.jobs || [],
-        nextCursor: data.nextCursor,
+        totalCount: totalCount || allJobs.length,
+        jobs: allJobs,
+        nextCursor: currentCursor,
       };
     } catch (error) {
       console.warn('Failed to fetch from Himalayas proxy, falling back to local simulation:', error);

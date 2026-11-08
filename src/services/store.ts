@@ -13,6 +13,7 @@ import {
   ApplicationStatus,
   UserRole,
 } from '../types';
+import { ADDITIONAL_COMPANIES, generateSeededJobs } from './seededJobs';
 
 // Storage keys
 const STORAGE_PREFIX = 'grail_jobs_';
@@ -222,6 +223,7 @@ const INITIAL_COMPANIES: Company[] = [
     created_at: new Date(Date.now() - 35 * 86400000).toISOString(),
     updated_at: new Date(Date.now() - 1 * 86400000).toISOString(),
   },
+  ...ADDITIONAL_COMPANIES,
 ];
 
 const INITIAL_JOBS: Job[] = [
@@ -715,6 +717,7 @@ const INITIAL_JOBS: Job[] = [
     updated_at: new Date().toISOString(),
     skills: ['Figma', 'Typography', 'Design Systems', 'Motion Design'],
   },
+  ...generateSeededJobs(),
 ];
 
 // Preconfigured Users
